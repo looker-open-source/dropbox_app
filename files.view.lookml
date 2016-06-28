@@ -23,9 +23,9 @@
     type: number
     sql: ${TABLE}.size_bytes
 
-  - dimension: size_formatted
-    type: string
-    sql: ${TABLE}.size_formatted
+#   - dimension: size_formatted
+#     type: string
+#     sql: ${TABLE}.size_formatted
 
   - dimension: user_email
     type: string

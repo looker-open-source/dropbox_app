@@ -1,4 +1,4 @@
-- view: sanitized_events
+- view: events
   sql_table_name: public.sanitized_events
   fields:
 
@@ -17,6 +17,22 @@
   - dimension: event_type
     type: string
     sql: ${TABLE}.event_type
+  
+  - dimension: event_name
+    sql_case:
+      Authorized an Application: ${event_type} = 'app_allow'
+      Removed an Application: ${event_type} = 'app_remove'
+      Linked a Device:  ${event_type} = 'device_link'
+      Removed a Device: ${event_type} = 'device_unlink'
+      Invited Non-Team Member(s) to a Shared Folder: ${event_type} = 'sf_nonteam_invite'
+      Joined a shared folder (non-team member): ${event_type} = 'sf_nonteam_join' 
+      Invited team member(s) to a shared folder: ${event_type} = 'sf_team_invite'
+      Joined a shared folder (team member): ${event_type} = 'sf_team_join'
+      Downloaded the contents of a link (non-team member): ${event_type} = 'shmodel_nonteam_download'
+      Opened a link (non-team member): ${event_type} = 'shmodel_nonteam_view'
+      Downloaded the contents of a link (team member): ${event_type} = 'shmodel_team_download'
+      Opened a link (team member): ${event_type} = 'shmodel_team_view'
+
 
   - dimension: info_app_id
     type: number
