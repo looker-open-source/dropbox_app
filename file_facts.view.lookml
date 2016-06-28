@@ -1,6 +1,9 @@
 - view: file_facts
   derived_table:
 ## Persistent Derived Table SQL avoids window functions to cover larger range of SQL dialects    
+    sortkeys: [file_created_date]
+    distkey: path
+    sql_trigger_value: SELECT CURRENT_DATE
     sql: |
       SELECT  file_facts.path 
               , file_facts.latest_modified_date
@@ -31,11 +34,11 @@
     type: string
     sql: ${TABLE}.path
 
-  - dimension_group: latest_modified_date
+  - dimension_group: latest_modified
     type: time
     sql: ${TABLE}.latest_modified_date
 
-  - dimension_group: file_created_date
+  - dimension_group: file_created
     type: time
     sql: ${TABLE}.file_created_date
 

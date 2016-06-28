@@ -23,15 +23,27 @@
     type: number
     sql: ${TABLE}.size_bytes
 
-#   - dimension: size_formatted
-#     type: string
-#     sql: ${TABLE}.size_formatted
+  - dimension: size_formatted
+    type: string
+    sql: ${TABLE}.size_formatted
 
   - dimension: user_email
     type: string
     sql: ${TABLE}.user_email
 
-  - measure: count
+  - measure: count_edits
     type: count
     drill_fields: []
+  
+  - measure : count_files
+    type: count_distinct
+    sql: ${path}
+  
+  - measure: max_file_size_bytes
+    type: max
+    sql: ${size_bytes}
+  
+  - measure: min_file_size_bytes
+    type: min
+    sql: ${size_bytes}
 
