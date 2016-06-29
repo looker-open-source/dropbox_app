@@ -31,17 +31,20 @@
 
   - dimension: path
     primary_key: true
+    hidden: true
     type: string
     sql: ${TABLE}.path
 
   - dimension_group: latest_modified
     type: time
+    timeframes: [raw, time, date, week, month, year]
     sql: ${TABLE}.latest_modified_date
 
   - dimension_group: file_created
     type: time
+    timeframes: [raw, time, date, week, month, year]
     sql: ${TABLE}.file_created_date
-
+  
   - dimension: file_edits
     type: number
     sql: ${TABLE}.file_edits

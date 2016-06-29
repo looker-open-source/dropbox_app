@@ -8,7 +8,7 @@
 
   - dimension_group: modified
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [raw, time, date, week, month, year]
     sql: ${TABLE}.modified
 
   - dimension: path
@@ -32,6 +32,7 @@
     sql: ${TABLE}.user_email
 
   - measure: count_edits
+#     description: "Includes File Adds"
     type: count
     drill_fields: []
   
@@ -46,4 +47,3 @@
   - measure: min_file_size_bytes
     type: min
     sql: ${size_bytes}
-

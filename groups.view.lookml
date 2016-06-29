@@ -16,7 +16,7 @@
 
   - dimension: group_name
     type: string
-    sql: ${TABLE}.group_name
+    sql: coalesce(${TABLE}.group_name,'No Group')
 
   - dimension: member_count
     type: number

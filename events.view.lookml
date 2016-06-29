@@ -9,16 +9,26 @@
   - dimension: email
     type: string
     sql: ${TABLE}.email
+  
+  - dimension: email_domain
+    type: string
+    sql: split_part(${email},'@',2)
 
+  - dimension: is_internal
+    type: yesno
+    sql: ${email_domain} = 'dropbox.com' ##change for relevant internal email domain
+    
   - dimension: event_category
     type: string
     sql: ${TABLE}.event_category
 
   - dimension: event_type
     type: string
+    hidden: true
     sql: ${TABLE}.event_type
   
   - dimension: event_name
+    group_label: "Event Type"
     sql_case:
       Authorized an Application: ${event_type} = 'app_allow'
       Removed an Application: ${event_type} = 'app_remove'
@@ -32,8 +42,30 @@
       Opened a link (non-team member): ${event_type} = 'shmodel_nonteam_view'
       Downloaded the contents of a link (team member): ${event_type} = 'shmodel_team_download'
       Opened a link (team member): ${event_type} = 'shmodel_team_view'
+  
+  - dimension: is_folder_share_event
+    type: yesno
+    group_label: "Event Type"
+    sql: ${event_type} in ('sf_nonteam_invite', 'sf_team_invite')
+  
+  - dimension: is_folder_join_event
+    type: yesno
+    group_label: "Event Type"
+    sql: ${event_type} in ('sf_nonteam_join', 'sf_team_join')
+  
+  - dimension: is_folder_event
+    type: yesno
+    group_label: "Event Type"
+    sql: ${event_type} in ('sf_nonteam_invite', 'sf_team_invite', 'sf_nonteam_join', 'sf_team_join')
 
-
+  - dimension: info_email_simplified
+    type: string 
+    sql: coalesce(${info_email},${info_link_owner_email},${info_target_user_email})
+ 
+  - dimension: is_info_email_internal
+    type: yesno
+    sql: ${info_email_simplified} = 'dropbox.com' ##change for relevant internal email domain
+  
   - dimension: info_app_id
     type: number
     sql: ${TABLE}.info_app_id
@@ -62,7 +94,7 @@
     type: string
     sql: ${TABLE}.info_name
 
-  - dimension: info_orig_folder_name
+  - dimension: folder_name
     type: string
     sql: ${TABLE}.info_orig_folder_name
 
@@ -74,7 +106,7 @@
     type: string
     sql: ${TABLE}.info_platform
 
-  - dimension: info_shared_folder_id
+  - dimension: folder_id
     type: number
     sql: ${TABLE}.info_shared_folder_id
 
@@ -103,6 +135,16 @@
   - measure: count
     type: count
     drill_fields: detail*
+  
+  - measure: count_folder_shares
+    type: count
+    filter: 
+      is_folder_share_event: yes
+  
+  - measure: count_folder_joins
+    type: count
+    filter: 
+      is_folder_join_event: yes
 
 
   # ----- Sets of fields for drilling ------
