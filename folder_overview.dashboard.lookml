@@ -8,7 +8,7 @@
       height: 400
     - elements: [folder_joins_by_group_name, joined_folder]
       height: 400
-    - elements: [folders_by_email_domain]
+    - elements: [group_to_group, folders_by_email_domain]
       height: 400
 
   filters:
@@ -191,6 +191,40 @@
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
+    limit_displayed_rows: false
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    show_null_labels: false
+  
+  - name: group_to_group
+    title: Top 15 Group to Group Sharing by Invite Count (including No Group specified)
+    type: looker_bar
+    model: dropbox
+    explore: events
+    dimensions: [groups.group_name, groups_target.group_name]
+    measures: [events.count]
+    listen: 
+      date: events.event_date
+      folder_name: events.folder_name
+    filters:
+      events.event_name: Invited team member(s) to a shared folder
+    sorts: [events.count desc]
+    limit: 15
+    stacking: ''
+    colors: ['#5245ed', '#ed6168', '#1ea8df', '#353b49', '#49cec1', '#b3a0dd', '#db7f2a',
+      '#706080', '#a2dcf3', '#776fdf', '#e9b404', '#635189']
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
     limit_displayed_rows: false
     y_axis_combined: true
     show_y_axis_labels: true

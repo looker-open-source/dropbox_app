@@ -23,5 +23,10 @@
   - join: file_facts
     sql_on: ${events.info_path} = ${file_facts.path}
     relationship: many_to_one
+  
+  - join: groups_target
+    from: groups
+    sql_on: ${events.info_email_simplified} = ${groups.email}
+    relationship: many_to_one
     
 - explore: groups

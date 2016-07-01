@@ -16,7 +16,7 @@
 
   - dimension: is_internal
     type: yesno
-    sql: ${email_domain} = 'dropbox.com' ##change for relevant internal email domain
+    sql: ${email_domain} = 'hanfordinc.com' ##change for relevant internal email domain
     
   - dimension: event_category
     type: string
@@ -58,6 +58,21 @@
     group_label: "Event Type"
     sql: ${event_type} in ('sf_nonteam_invite', 'sf_team_invite', 'sf_nonteam_join', 'sf_team_join')
 
+  - dimension: is_link_open_event
+    type: yesno
+    group_label: "Event Type"
+    sql: ${event_type} in ('shmodel_nonteam_view','shmodel_team_view')
+    
+  - dimension: is_link_download_event
+    type: yesno
+    group_label: "Event Type"
+    sql:  ${event_type} in ('shmodel_team_download','shmodel_nonteam_download')
+  
+  - dimension: is_link_event
+    type: yesno
+    group_label: "Event Type"
+    sql: ${event_type} in ('shmodel_nonteam_view','shmodel_team_view', 'shmodel_team_download','shmodel_nonteam_download')
+    
   - dimension: info_email_simplified
     type: string 
     sql: coalesce(${info_email},${info_link_owner_email},${info_target_user_email})
@@ -145,6 +160,16 @@
     type: count
     filter: 
       is_folder_join_event: yes
+  
+  - measure: count_link_opens
+    type: count
+    filter: 
+      is_link_open_event: yes
+  
+  - measure: count_link_downloads
+    type: count
+    filter: 
+      is_link_download_event: yes
 
 
   # ----- Sets of fields for drilling ------
