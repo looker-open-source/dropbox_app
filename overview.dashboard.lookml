@@ -1,13 +1,17 @@
-- dashboard: overview
+- dashboard: overview #
   title: Overview
   layout: grid
   rows:
     - elements: [cnt_folder_joins, cnt_folder_shares, cnt_link_opens, cnt_link_dwnlds]
       height: 220
+    - elements: [weekly_folder_joins]
+      height: 300
     - elements: [top_15_folder_shares_by_folder, folder_metrics]
       height: 400
     - elements: [group_to_group_share_bar, group_to_group_folder_table]
       height: 400
+    - elements: [link_weekly]
+      height: 300
     - elements: [top_15_links, links_by_downloads_and_opens]
       height: 400
   filters:
@@ -73,9 +77,43 @@
     show_single_value_title: true
     show_comparison: false
 
+  - name: weekly_folder_joins
+    title: Weekly Folder Metrics
+    type: looker_line
+    model: dropbox
+    explore: events
+    dimensions: [events.event_week]
+    measures: [events.count_folder_joins, events.count_folder_shares]
+    sorts: [events.event_week]
+    limit: 500
+    stacking: ''
+    colors: ['#5245ed', '#ed6168', '#1ea8df', '#353b49', '#49cec1', '#b3a0dd', '#db7f2a',
+      '#706080', '#a2dcf3', '#776fdf', '#e9b404', '#635189']
+    listen: 
+      date: events.event_date
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    limit_displayed_rows: false
+    hidden_series: [events.count_link_downloads, events.count_link_opens]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    show_null_points: true
+    point_style: none
+    interpolation: linear
+
   - name: top_15_folder_shares_by_folder
     title: Top 15 Folders by Folder Shares
-    type: looker_bar
+    type: looker_column
     model: dropbox
     explore: events
     dimensions: [events.folder_name]
@@ -87,7 +125,7 @@
     sorts: [events.count_folder_shares desc]
     limit: 15
     stacking: ''
-    colors: ['#5245ed', '#ed6168', '#1ea8df', '#353b49', '#49cec1', '#b3a0dd', '#db7f2a',
+    colors: ['#ed6168', '#1ea8df', '#353b49', '#49cec1', '#b3a0dd', '#db7f2a',
       '#706080', '#a2dcf3', '#776fdf', '#e9b404', '#635189']
     show_value_labels: false
     label_density: 25
@@ -180,6 +218,40 @@
     table_theme: gray
     limit_displayed_rows: false
   
+  - name: link_weekly
+    title: Weekly Link Sharing Metrics
+    type: looker_line
+    model: dropbox
+    explore: events
+    dimensions: [events.event_week]
+    measures: [events.count_link_downloads, events.count_link_opens]
+    sorts: [events.event_week]
+    limit: 500
+    stacking: ''
+    colors: ['#1ea8df', '#49cec1', '#b3a0dd', '#db7f2a', '#706080', '#a2dcf3', '#776fdf',
+      '#e9b404', '#635189']
+    listen: 
+      date: events.event_date
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    limit_displayed_rows: false
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    show_null_points: true
+    point_style: none
+    interpolation: linear
+
+  
   - name: top_15_links
     title: Top 15 Links by Downloads and Opens
     type: looker_bar
@@ -196,7 +268,7 @@
     limit: 15
     column_limit: 50
     stacking: ''
-    colors: ['#5245ed', '#ed6168', '#1ea8df', '#353b49', '#49cec1', '#b3a0dd', '#db7f2a',
+    colors: ['#1ea8df',  '#49cec1', '#b3a0dd', '#db7f2a',
       '#706080', '#a2dcf3', '#776fdf', '#e9b404', '#635189']
     show_value_labels: false
     label_density: 25
@@ -211,6 +283,7 @@
     y_axis_tick_density: default
     show_x_axis_label: true
     show_x_axis_ticks: true
+    show_view_names: false
     x_axis_scale: auto
     y_axis_scale_mode: linear
     show_null_labels: false
