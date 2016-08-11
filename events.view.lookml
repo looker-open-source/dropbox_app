@@ -81,6 +81,10 @@
     type: yesno
     sql: ${info_email_simplified} = 'dropbox.com' ##change for relevant internal email domain
   
+  - dimension: info_email_simplified_domain
+    type: string
+    sql: split_part(${info_email_simplified},'@',2)
+    
   - dimension: info_app_id
     type: number
     sql: ${TABLE}.info_app_id

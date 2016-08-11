@@ -14,7 +14,7 @@
       height: 400
     - elements: [link_weekly]
       height: 300
-    - elements: [top_15_links, links_by_downloads_and_opens]
+    - elements: [top_15_links, links_by_downloads_and_opens, external_link_opens_pie]
       height: 400
     - elements: [map]
       height: 500
@@ -365,6 +365,27 @@
     table_theme: gray
     limit_displayed_rows: false
   
+  - name: external_link_opens_pie
+    title: Percent External Link Opens
+    type: looker_pie
+    model: dropbox
+    explore: events
+    dimensions: [events.email_domain]
+    measures: [events.count_link_opens]
+    hidden_fields: [events.count]
+    filters:
+      events.is_link_event: 'Yes'
+    sorts: [events.count_link_opens desc 1, events.event_name__sort_]
+    limit: 15
+    column_limit: 50
+    value_labels: legend
+    colors: ['#1ea8df', '#49cec1', '#b3a0dd', '#db7f2a', '#706080', '#a2dcf3', '#776fdf',
+      '#e9b404', '#635189']
+    series_labels:
+      ? ''
+      : External
+    show_view_names: false
+ 
   - name: map
     title: Event Count by Country
     type: looker_map
