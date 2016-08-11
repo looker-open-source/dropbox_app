@@ -3,7 +3,7 @@
   fields:
 
   - dimension: country
-    type: string
+    map_layer: countries
     sql: ${TABLE}.country
 
   - dimension: email

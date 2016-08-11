@@ -10,10 +10,14 @@
       height: 400
     - elements: [group_to_group_share_bar, group_to_group_folder_table]
       height: 400
+    - elements: [top_15_folder_email_domains, folder_email_domain_table]
+      height: 400
     - elements: [link_weekly]
       height: 300
     - elements: [top_15_links, links_by_downloads_and_opens]
       height: 400
+    - elements: [map]
+      height: 500
   filters:
 
   - name: date
@@ -218,6 +222,57 @@
     table_theme: gray
     limit_displayed_rows: false
   
+  - name: top_15_folder_email_domains
+    title: Folder Metrics by Email Domain (Top 15)
+    type: looker_bar
+    model: dropbox
+    explore: events
+    dimensions: [events.email_domain]
+    measures: [events.count_folder_joins, events.count_folder_shares]
+    listen: 
+      date: events.event_date
+    sorts: [events.count_folder_joins desc]
+    limit: 15
+    column_limit: 50
+    stacking: ''
+    colors: ['#5245ed', '#ed6168', '#1ea8df', '#353b49', '#49cec1', '#b3a0dd', '#db7f2a',
+      '#706080', '#a2dcf3', '#776fdf', '#e9b404', '#635189']
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    limit_displayed_rows: false
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    show_null_labels: false
+  
+  - name: folder_email_domain_table
+    title: Folder Metrics by Email Domain
+    type: table
+    model: dropbox
+    explore: events
+    dimensions: [events.email_domain]
+    measures: [events.count_folder_joins, events.count_folder_shares]
+    listen: 
+      date: events.event_date
+    sorts: [events.count_folder_joins desc]
+    limit: 500
+    column_limit: 50
+    show_view_names: false
+    show_row_numbers: true
+    truncate_column_names: false
+    table_theme: gray
+    limit_displayed_rows: false
+
+
   - name: link_weekly
     title: Weekly Link Sharing Metrics
     type: looker_line
@@ -308,7 +363,33 @@
     series_labels:
       events.count: Total Events
     table_theme: gray
-  limit_displayed_rows: false
-
-
-
+    limit_displayed_rows: false
+  
+  - name: map
+    title: Event Count by Country
+    type: looker_map
+    model: dropbox
+    explore: events
+    dimensions: [events.country]
+    measures: [events.count]
+    listen: 
+      date: events.event_date
+    sorts: [events.count desc]
+    limit: 500
+    map_plot_mode: points
+    map_tile_provider: positron
+    map_position: fit_data
+    map_scale_indicator: 'off'
+    map_pannable: true
+    map_zoomable: true
+    map_marker_type: circle
+    map_marker_radius_mode: proportional_value
+    map_marker_units: meters
+    map_marker_proportional_scale_type: linear
+    map_marker_color_mode: fixed
+    show_view_names: true
+    quantize_map_value_colors: false
+    
+    
+    
+    
