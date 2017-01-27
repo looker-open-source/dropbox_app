@@ -23,7 +23,7 @@
     explore: events
     field: events.folder_name
     default_value: Team1_shared
-    
+
   elements:
 
   - name: folder_joins
@@ -32,29 +32,29 @@
     model: dropbox
     explore: events
     measures: [events.count_folder_joins]
-    listen: 
+    listen:
       date: events.event_date
       folder_name: events.folder_name
     sorts: [events.count_folder_joins desc]
     limit: 500
     show_single_value_title: true
     show_comparison: false
-  
+
   - name: folder_shares
     title: Folder Shares
     type: single_value
     model: dropbox
     explore: events
     measures: [events.count_folder_shares]
-    listen: 
+    listen:
       date: events.event_date
       folder_name: events.folder_name
     sorts: [events.count_folder_shares desc]
     limit: 500
     show_single_value_title: true
     show_comparison: false
-  
-  
+
+
   - name: top_15_user_folder_share
     title: Top 15 Users by Count Folder Shares
     type: looker_bar
@@ -62,7 +62,7 @@
     explore: events
     dimensions: [events.email]
     measures: [events.count_folder_shares]
-    listen: 
+    listen:
       date: events.event_date
       folder_name: events.folder_name
     filters:
@@ -89,7 +89,7 @@
     x_axis_scale: auto
     y_axis_scale_mode: linear
     show_null_labels: false
-  
+
   - name: top_15_user_folder_share_table
     title: Users by Folder Share (Broken down by Team and Non-Team)
     type: table
@@ -102,7 +102,7 @@
     - table_calculation: total
       label: Total
       expression: coalesce(pivot_index(${events.count_folder_shares},1),0) + coalesce(pivot_index(${events.count_folder_shares},2),0)
-    listen: 
+    listen:
       date: events.event_date
       folder_name: events.folder_name
     filters:
@@ -116,13 +116,13 @@
     table_theme: gray
     limit_displayed_rows: false
 
-  - name: joined_folder 
+  - name: joined_folder
     title: Joined Folder
     type: table
     model: dropbox
     explore: events
     dimensions: [events.event_time, events.email]
-    listen: 
+    listen:
       date: events.event_date
       folder_name: events.folder_name
     filters:
@@ -135,7 +135,7 @@
     truncate_column_names: false
     table_theme: gray
     limit_displayed_rows: false
-  
+
   - name: folders_by_email_domain
     title: Folder Metrics by Email Domain
     type: looker_column
@@ -143,7 +143,7 @@
     explore: events
     dimensions: [events.email_domain]
     measures: [events.count_folder_joins, events.count_folder_shares]
-    listen: 
+    listen:
       date: events.event_date
       folder_name: events.folder_name
     sorts: [events.count_folder_joins desc]
@@ -168,7 +168,7 @@
     x_axis_scale: auto
     y_axis_scale_mode: linear
     show_null_labels: false
-  
+
   - name: folder_joins_by_group_name
     title: Folder Joins and Shares By Group Name
     type: looker_bar
@@ -176,7 +176,7 @@
     explore: events
     dimensions: [groups.group_name]
     measures: [events.count_folder_joins, events.count_folder_shares]
-    listen: 
+    listen:
       date: events.event_date
       folder_name: events.folder_name
     sorts: [events.count_folder_joins desc]
@@ -201,7 +201,7 @@
     x_axis_scale: auto
     y_axis_scale_mode: linear
     show_null_labels: false
-  
+
   - name: group_to_group
     title: Top 15 Group to Group Sharing by Invite Count (including No Group specified)
     type: looker_bar
@@ -209,7 +209,7 @@
     explore: events
     dimensions: [groups.group_name, groups_target.group_name]
     measures: [events.count]
-    listen: 
+    listen:
       date: events.event_date
       folder_name: events.folder_name
     filters:
@@ -237,9 +237,8 @@
     show_null_labels: false
 
 
-  
-      
-  
-  
-  
-  
+
+
+
+
+

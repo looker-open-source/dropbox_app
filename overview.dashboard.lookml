@@ -33,21 +33,21 @@
     model: dropbox
     explore: events
     measures: [events.count_folder_joins]
-    listen: 
+    listen:
       date: events.event_date
     sorts: [events.count desc]
     limit: 500
     column_limit: 50
     show_single_value_title: true
     show_comparison: false
-  
+
   - name: cnt_folder_shares
     title: Count Folder Shares
     type: single_value
     model: dropbox
     explore: events
     measures: [events.count_folder_shares]
-    listen: 
+    listen:
       date: events.event_date
     sorts: [events.count desc]
     limit: 500
@@ -61,20 +61,20 @@
     model: dropbox
     explore: events
     measures: [events.count_link_opens]
-    listen: 
+    listen:
       date: events.event_date
     limit: 500
     column_limit: 50
     show_single_value_title: true
     show_comparison: false
-  
+
   - name: cnt_link_dwnlds
     title: Count Link Downloads
     type: single_value
     model: dropbox
     explore: events
     measures: [events.count_folder_shares]
-    listen: 
+    listen:
       date: events.event_date
     limit: 500
     column_limit: 50
@@ -93,7 +93,7 @@
     stacking: ''
     colors: ['#5245ed', '#ed6168', '#1ea8df', '#353b49', '#49cec1', '#b3a0dd', '#db7f2a',
       '#706080', '#a2dcf3', '#776fdf', '#e9b404', '#635189']
-    listen: 
+    listen:
       date: events.event_date
     show_value_labels: false
     label_density: 25
@@ -122,7 +122,7 @@
     explore: events
     dimensions: [events.folder_name]
     measures: [events.count_folder_shares]
-    listen: 
+    listen:
       date: events.event_date
     filters:
       events.is_folder_event: 'Yes'
@@ -147,7 +147,7 @@
     x_axis_scale: auto
     y_axis_scale_mode: linear
     show_null_labels: false
-  
+
   - name: folder_metrics
     title: Folder Metrics
     type: table
@@ -175,7 +175,7 @@
     measures: [events.count]
     filters:
       events.event_name: Invited team member(s) to a shared folder
-    listen: 
+    listen:
       date: events.event_date
     sorts: [events.count desc]
     limit: 15
@@ -198,9 +198,9 @@
     x_axis_scale: auto
     y_axis_scale_mode: linear
     show_null_labels: false
-  
+
   - name: group_to_group_folder_table
-    title: Group to Group Folder Sharing by Invite Count 
+    title: Group to Group Folder Sharing by Invite Count
     type: table
     model: dropbox
     explore: events
@@ -210,7 +210,7 @@
       events.event_name: Invited team member(s) to a shared folder
       groups.group_name: -No Group
       groups_target.group_name: -No Group
-    listen: 
+    listen:
       date: events.event_date
     sorts: [events.count desc]
     limit: 500
@@ -221,7 +221,7 @@
       events.count: Invite Count
     table_theme: gray
     limit_displayed_rows: false
-  
+
   - name: top_15_folder_email_domains
     title: Folder Metrics by Email Domain (Top 15)
     type: looker_bar
@@ -229,7 +229,7 @@
     explore: events
     dimensions: [events.email_domain]
     measures: [events.count_folder_joins, events.count_folder_shares]
-    listen: 
+    listen:
       date: events.event_date
     sorts: [events.count_folder_joins desc]
     limit: 15
@@ -253,7 +253,7 @@
     x_axis_scale: auto
     y_axis_scale_mode: linear
     show_null_labels: false
-  
+
   - name: folder_email_domain_table
     title: Folder Metrics by Email Domain
     type: table
@@ -261,7 +261,7 @@
     explore: events
     dimensions: [events.email_domain]
     measures: [events.count_folder_joins, events.count_folder_shares]
-    listen: 
+    listen:
       date: events.event_date
     sorts: [events.count_folder_joins desc]
     limit: 500
@@ -285,7 +285,7 @@
     stacking: ''
     colors: ['#1ea8df', '#49cec1', '#b3a0dd', '#db7f2a', '#706080', '#a2dcf3', '#776fdf',
       '#e9b404', '#635189']
-    listen: 
+    listen:
       date: events.event_date
     show_value_labels: false
     label_density: 25
@@ -306,7 +306,7 @@
     point_style: none
     interpolation: linear
 
-  
+
   - name: top_15_links
     title: Top 15 Links by Downloads and Opens
     type: looker_bar
@@ -315,7 +315,7 @@
     dimensions: [events.info_base_name]
     measures: [events.count, events.count_link_downloads, events.count_link_opens]
     hidden_fields: [events.count]
-    listen: 
+    listen:
       date: events.event_date
     filters:
       events.is_link_event: 'Yes'
@@ -342,7 +342,7 @@
     x_axis_scale: auto
     y_axis_scale_mode: linear
     show_null_labels: false
-  
+
   - name: links_by_downloads_and_opens
     title: Links by Downloads and Opens
     type: table
@@ -350,7 +350,7 @@
     explore: events
     dimensions: [events.info_base_name]
     measures: [events.count_link_downloads, events.count_link_opens, events.count]
-    listen: 
+    listen:
       date: events.event_date
     filters:
       events.is_link_event: 'Yes'
@@ -364,7 +364,7 @@
       events.count: Total Events
     table_theme: gray
     limit_displayed_rows: false
-  
+
   - name: external_link_opens_pie
     title: Percent External Link Opens
     type: looker_pie
@@ -385,7 +385,7 @@
       ? ''
       : External
     show_view_names: false
- 
+
   - name: map
     title: Event Count by Country
     type: looker_map
@@ -393,7 +393,7 @@
     explore: events
     dimensions: [events.country]
     measures: [events.count]
-    listen: 
+    listen:
       date: events.event_date
     sorts: [events.count desc]
     limit: 500
@@ -410,7 +410,6 @@
     map_marker_color_mode: fixed
     show_view_names: true
     quantize_map_value_colors: false
-    
-    
-    
-    
+
+
+
